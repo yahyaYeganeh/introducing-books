@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="row card-container">
+        <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let book of books;trackBy:trackbyService.book">
+            <div class="card">
+                <div class="card-header">
+                    <a [routerLink]="['/books',book.id,'details']" class="white">
+                        {{book.title | capitalize }} 
+                    </a>
+                    <a [routerLink]="['/books',book.id,'detail']">
+                        <i title="Detai;"  
+                           class="pull-right glyphicon glyphicon-book book-icon white"></i>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="clearfix">
+                        <div class="pull-left card-body-left">
+                            <a href="#" class="white">
+                                <img src="assets/images/book.jpg" class="card-image" />
+                            </a>
+                        </div>
+                        <div class="pull-left card-body-right">
+                            <div class="card-body-content">{{book.shortDescription | trim }}</div>
+                            <div class="card-body-content">{{book.author | trim }}</div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!books.length">
+            No Records Found
+        </div>
+    </div>
+</div>

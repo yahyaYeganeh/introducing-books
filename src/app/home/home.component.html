@@ -1,0 +1,24 @@
+<div class="books view indent">
+    <div class="container">
+        <header>
+            <h3>
+                <span class="glyphicon glyphicon-book"></span>
+                {{ title }}
+            </h3>
+        </header>
+        <br />
+                <div class="navbar">
+             
+                    <div class="row">
+                     
+                        <div class="col-md-12">
+                           <cm-search-textbox></cm-search-textbox>
+                        </div>
+                        
+                    </div>
+                </div>
+        
+        <cm-books-card [books]="latestBooks"></cm-books-card>
+
+
+    </div>

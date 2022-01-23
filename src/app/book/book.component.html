@@ -1,0 +1,30 @@
+<div class="book view">
+    <div class="container">
+        <header>
+            <h3><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Book Information</h3>
+        </header>
+        <br />
+        <div class="navbar">
+            <ul class="nav navbar-nav">
+                <li class="toolbar-item">
+                    <a routerLink="details" routerLinkActive="active">
+                       <span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;Book Details
+                    </a>
+                </li>
+              
+            </ul>
+        </div>
+        <div class="container">
+            <router-outlet></router-outlet>
+            <br />
+            <br />
+            <a routerLink="/books">View all Books</a>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

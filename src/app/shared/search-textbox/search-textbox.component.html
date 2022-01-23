@@ -1,0 +1,14 @@
+<form>
+    <div class="form-group col-md-12">
+        <form>
+            <input id="searchInput" type="text" [(ngModel)]="searchText" name="search" placeholder="Find your Book"
+                autocomplete="off">
+            <button id="searchButton" type="submit" (click) ="searchBook()" >
+                <div class="btn-icon">
+                    <img src="assets/images/search.png" alt="search">
+                </div>
+            </button>
+        </form>
+       
+    </div>
+</form>
