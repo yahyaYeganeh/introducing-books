@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         this.getLatestBooks() ;
-        this.title = 'Latest books';
+        this.title = 'Find and read about the best books';
        
     }
     getLatestBooks() {

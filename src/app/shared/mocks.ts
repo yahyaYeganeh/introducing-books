@@ -7,37 +7,61 @@ import { Observable, of } from 'rxjs';
 import { IBook } from './IBook';
 import { IPagedResults } from './IPagedResults';
 export class MockDataService {
-    constructor() {}
+    constructor() {
+    }
 
     getBook(id: number): Observable<IBook> {
-        if (id === 1) {
-            return of(books.slice(0, 1)[0]);
+        if (id !== undefined) {
+            return of(books.find((item: IBook) => { 
+                return item.id==id;
+            }) as IBook);
         } else {
             return of({} as IBook);
         }
     }
 
-    getBooksPage(page: number, pageSize: number): Observable<IPagedResults<IBook[]>> {
+    getBooksPage(page: number, pageSize: number,searchData:string=""): Observable<IPagedResults<IBook[]>> {
         const topVal = pageSize,
             skipVal = page,
             skip = (isNaN(skipVal)) ? 0 : +skipVal;
         let top = (isNaN(topVal)) ? 10 : skip + (+topVal);
+        var filteredBooks=[];
+        if (searchData && books) {
+            
+            filteredBooks = books;
+        }
+         else {
+           filteredBooks = books;
+        } 
+        if (top > filteredBooks.length) {
+            top = skip + (filteredBooks.length - skip);
+        }
 
-        if (top > books.length) {
-            top = skip + (books.length - skip);
+        return of({
+            totalRecords: filteredBooks.length,
+            results: filteredBooks.slice(skip, top)
+        });
+    }
+
+    getLastestBooks(count: number): Observable<IPagedResults<IBook[]>> {
+        
+       
+        if (count>0 &&  count< books.length) {
+            return of({
+                totalRecords: books.length,
+                results: books.slice(books.length-count, books.length)
+            });
         }
 
         return of({
             totalRecords: books.length,
-            results: books.slice(skip, top)
+            results: books
         });
     }
-
     getBooks(): Observable<IBook[]> {
         return of(books);
     }
 }
-
 export class MockActivatedRoute implements ActivatedRoute {
     snapshot: ActivatedRouteSnapshot = {} as ActivatedRouteSnapshot;
     url: Observable<UrlSegment[]> = {} as Observable<UrlSegment[]>;

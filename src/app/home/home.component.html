@@ -1,22 +1,29 @@
 <div class="books view indent">
     <div class="container">
-        <header>
-            <h3>
-                <span class="glyphicon glyphicon-book"></span>
-                {{ title }}
-            </h3>
-        </header>
-        <br />
-                <div class="navbar">
-             
-                    <div class="row">
-                     
-                        <div class="col-md-12">
-                           <cm-search-textbox></cm-search-textbox>
-                        </div>
-                        
-                    </div>
+
+        <div class="navbar">
+            <header>
+                <h3>
+                    <span class="glyphicon glyphicon-book"></span>
+                    {{ title }}
+                </h3>
+            </header>
+            <br />
+            <div class="row">
+                
+                <div class="col-md-12">
+                    <cm-search-textbox></cm-search-textbox>
                 </div>
+                
+            </div>
+            <br />
+            <header>
+                <h3>
+                   
+                  New
+                </h3>
+            </header>
+        </div>
         
         <cm-books-card [books]="latestBooks"></cm-books-card>
 
