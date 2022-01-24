@@ -1,7 +1,8 @@
-/* cm-search-textbox {
+ cm-search-textbox {
     margin-top: 5px;
-} */
-form{
+} 
+
+.form-group form{
     margin: 0;
     padding: 0;
     border: 0;
@@ -14,7 +15,7 @@ form{
     justify-content: flex-end;
 }
 
-#searchInput  {
+.form-group form input  {
     width: 100%;
     padding: 18px 20px;
     border: 1px solid #ddd;
@@ -24,7 +25,7 @@ form{
     background: #FFF;
     font-size: 14px;
 }
-#searchButton {
+.form-group form button {
     position: relative;
     padding: 18px 20px;
     -webkit-transition: all .15s ease-in-out;
