@@ -1,16 +1,17 @@
-import { Component, OnInit, ComponentRef, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit,OnDestroy, ComponentRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { IBook } from '../../shared/IBook';
 import { DataService } from '../../core/services/data.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'cm-book-details',
   templateUrl: './book-details.component.html',
   styleUrls: ['./book-details.component.css']
 })
-export class BookDetailsComponent implements OnInit {
-
+export class BookDetailsComponent implements OnInit,OnDestroy {
+  subscription= new Subscription();
   book: IBook | null = null;
   mapEnabled: boolean = false;
   mapComponentRef: ComponentRef<any> = {} as ComponentRef<any>;
@@ -26,7 +27,7 @@ export class BookDetailsComponent implements OnInit {
     this.route.parent?.params.subscribe((params: Params) => {
       const id = +params['id'];
       if (id) {
-        this.dataService.getBook(id)
+        this.subscription=  this.dataService.getBook(id)
           .subscribe((book: IBook) => {
             this.book = book;
            
@@ -35,7 +36,9 @@ export class BookDetailsComponent implements OnInit {
     });
   }
 
-  
+  ngOnDestroy() {
+    this.subscription.unsubscribe()
+}   
 
 
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit,OnDestroy  } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { DataService } from '../core/services/data.service';
 
 import { LoggerService } from '../core/services/logger.service';
@@ -11,11 +11,12 @@ import { IPagedResults } from '../shared/IPagedResults';
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit ,OnDestroy{
 
     latestBooks: IBook[] = [];
     title: string = '';
     searchText: string = '';
+    subscription= new Subscription();
     constructor(private dataService: DataService,
       private logger: LoggerService
          ) { }
@@ -28,7 +29,7 @@ export class HomeComponent implements OnInit {
     }
     getLatestBooks() {
    
-        this.dataService.getLastestBooks(3)
+         this.subscription =this.dataService.getLastestBooks(3)
             .subscribe((response: IPagedResults<IBook[]>) => {
             
               this.latestBooks =  response.results;
@@ -36,6 +37,9 @@ export class HomeComponent implements OnInit {
             },
             (err: any) => this.logger.log(err),
             () => this.logger.log('getLatestBooks() retrieved books for 3: ' ));
+            
       }
-      
+      ngOnDestroy() {
+        this.subscription.unsubscribe()
+    }   
 }

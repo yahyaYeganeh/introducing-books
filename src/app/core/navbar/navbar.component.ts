@@ -30,7 +30,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
    
 
     redirectToLogin() {
-        this.router.navigate(['/login']);
+        this.router.navigate(['/home']);
     }
 
     

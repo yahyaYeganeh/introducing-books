@@ -1,6 +1,6 @@
 import {
   Component, OnInit,
-  ComponentRef
+  ComponentRef,OnDestroy
 } from '@angular/core';
 
 import { DataService } from '../core/services/data.service';
@@ -9,13 +9,14 @@ import { IPagedResults } from '../shared/IPagedResults';
 import { FilterService } from '../core/services/filter.service';
 import { LoggerService } from '../core/services/logger.service';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 
 @Component({
   selector: 'cm-books',
   templateUrl: './books.component.html'
 })
-export class BooksComponent implements OnInit {
+export class BooksComponent implements OnInit,OnDestroy {
 
   title: string = '';
   filterText: string = '';
@@ -42,7 +43,7 @@ export class BooksComponent implements OnInit {
     private dataService: DataService,
     private filterService: FilterService,
     private logger: LoggerService) { }
-
+    private subscription= new Subscription();
   ngOnInit() {
     this.title = 'Books';
     this.filterText = 'Filter Books:';
@@ -73,7 +74,7 @@ export class BooksComponent implements OnInit {
 
   getBooksPage(page: number, textSearch = "") {
 
-    this.dataService.getBooksPage((page - 1) * this.pageSize, this.pageSize, textSearch)
+    this.subscription=this.dataService.getBooksPage((page - 1) * this.pageSize, this.pageSize, textSearch)
       .subscribe((response: IPagedResults<IBook[]>) => {
 
         this.books = this.filteredBooks = response.results;
@@ -93,7 +94,9 @@ export class BooksComponent implements OnInit {
       this.filteredBooks = this.books;
     }
   }
-
+  ngOnDestroy() {
+    this.subscription.unsubscribe()
+} 
 
 
 
