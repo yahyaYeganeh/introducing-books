@@ -29,17 +29,17 @@ export class HomeComponent implements OnInit ,OnDestroy{
     }
     getLatestBooks() {
    
-         this.subscription =this.dataService.getLastestBooks(3)
+         this.subscription .add(this.dataService.getLastestBooks(3)
             .subscribe((response: IPagedResults<IBook[]>) => {
             
               this.latestBooks =  response.results;
              
             },
             (err: any) => this.logger.log(err),
-            () => this.logger.log('getLatestBooks() retrieved books for 3: ' ));
+            () => this.logger.log('getLate)stBooks() retrieved books for 3: ' )));
             
       }
       ngOnDestroy() {
-        this.subscription.unsubscribe()
+        this.subscription.unsubscribe();
     }   
 }

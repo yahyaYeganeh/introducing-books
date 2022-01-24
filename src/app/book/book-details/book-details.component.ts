@@ -27,17 +27,17 @@ export class BookDetailsComponent implements OnInit,OnDestroy {
     this.route.parent?.params.subscribe((params: Params) => {
       const id = +params['id'];
       if (id) {
-        this.subscription=  this.dataService.getBook(id)
+        this.subscription.add( this.dataService.getBook(id)
           .subscribe((book: IBook) => {
             this.book = book;
            
-          });
+          }));
       }
     });
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe()
+    this.subscription.unsubscribe();
 }   
 
 

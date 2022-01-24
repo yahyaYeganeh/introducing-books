@@ -48,7 +48,7 @@ export class BooksComponent implements OnInit,OnDestroy {
     this.title = 'Books';
     this.filterText = 'Filter Books:';
     this.displayMode = DisplayModeEnum.Card;
-    this.route.parent?.params.subscribe((params: Params) => {
+    this.subscription.add(this.route.parent?.params.subscribe((params: Params) => {
 
       this.searchtext = params["search"];
       console.log(this.searchtext);
@@ -59,7 +59,7 @@ export class BooksComponent implements OnInit,OnDestroy {
       else {
         this.getBooksPage(1);
       }
-    });
+    }));
 
 
   }
@@ -74,14 +74,14 @@ export class BooksComponent implements OnInit,OnDestroy {
 
   getBooksPage(page: number, textSearch = "") {
 
-    this.subscription=this.dataService.getBooksPage((page - 1) * this.pageSize, this.pageSize, textSearch)
+    this.subscription.add(this.dataService.getBooksPage((page - 1) * this.pageSize, this.pageSize, textSearch)
       .subscribe((response: IPagedResults<IBook[]>) => {
 
         this.books = this.filteredBooks = response.results;
         this.totalRecords = response.totalRecords;
       },
         (err: any) => this.logger.log(err),
-        () => this.logger.log('getBooksPage() retrieved books for page: ' + page));
+        () => this.logger.log('getBooksPage() retrieved books for page: ' + page)));
   }
 
   filterChanged(data: string) {
@@ -95,7 +95,7 @@ export class BooksComponent implements OnInit,OnDestroy {
     }
   }
   ngOnDestroy() {
-    this.subscription.unsubscribe()
+    this.subscription.unsubscribe();
 } 
 
 
